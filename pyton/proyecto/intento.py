@@ -4,6 +4,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import messagebox as mssg
 import sqlite3
+from datetime import datetime
 
 
 class Inventario:
@@ -72,13 +73,11 @@ class Inventario:
         """ Ubicar el mouse en el inicio """
         # Captura IdNit del Proveedor
         self.idNit = ttk.Entry(self.frm1)
-        self.idNit.configure(takefocus=True)
+        self.idNit.focus_set()
         self.idNit.place(anchor="nw", x=0.05*ancho, y=col1)
-        self.idNit.bind("<KeyRelease>", self.validaIdNit)
+        self.idNit.bind("<Key>", self.validaIdNit)
+        self.idNit.bind("<BackSpace>", lambda _:self.idNit.delete(len(self.idNit.get())),'end')
 
-        """ No se que hace """
-        self.idNit.bind("<BackSpace>", lambda _: self.idNit.delete(
-            len(self.idNit.get())), 'end')
 
         # Etiqueta razón social del Proveedor
         self.lblRazonSocial = ttk.Label(self.frm1)
@@ -176,11 +175,15 @@ class Inventario:
 
         """ Aquí inicia el Treeview """
 
-        """ No se que hace acá """
+        """Esto configura el estilo del treeview de los datos"""
+        
         # tablaTreeView
         self.style = ttk.Style()
         self.style.configure("estilo.Treeview", highlightthickness=0,
                              bd=0, background="#e0e0e0", font=('Calibri Light', 10))
+
+         """Esto configura el estilo del treeview del encabezado""" 
+        
         self.style.configure("estilo.Treeview.Heading", background='Azure', font=(
             'Calibri Light', 10, 'bold'))
         self.style.layout("estilo.Treeview", [
